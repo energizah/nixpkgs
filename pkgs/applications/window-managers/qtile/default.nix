@@ -7,13 +7,13 @@ in
 
 python37Packages.buildPythonApplication rec {
   name = "qtile-${version}";
-  version = "0.13.0";
+  version = "0.15.0";
 
   src = fetchFromGitHub {
     owner = "qtile";
     repo = "qtile";
     rev = "v${version}";
-    sha256 = "1lyclnn8hs6wl4w9v5b4hh2q0pvmsn7cyibpskhbpw0cgv7bvi90";
+    sha256 = "0jnpb0yg8yh8a5vgq10jlaaapdl4m6c9slq6k519ryki4a8jnq5g";
   };
 
   patches = [
@@ -23,10 +23,10 @@ python37Packages.buildPythonApplication rec {
   ];
 
   postPatch = ''
-    substituteInPlace libqtile/manager.py --subst-var-by out $out
+    substituteInPlace libqtile/core/manager.py --subst-var-by out $out
     substituteInPlace libqtile/pangocffi.py --subst-var-by glib ${glib.out}
     substituteInPlace libqtile/pangocffi.py --subst-var-by pango ${pango.out}
-    substituteInPlace libqtile/xcursors.py --subst-var-by xcb-cursor ${xcbutilcursor.out}
+    substituteInPlace libqtile/backend/x11/xcursors.py --subst-var-by xcb-cursor ${xcbutilcursor.out}
   '';
 
   nativeBuildInputs = [ pkgconfig ];
